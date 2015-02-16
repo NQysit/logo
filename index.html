@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NQysit Logo Creator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- nqfonts -->
+    <link href="nqfonts.css" rel="stylesheet">
+    <link href="nqcustom.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body onload="dimensionsCanvas()">
+  	<div class="container">
+  		<nav class="navbar navbar-default" role="navigation">
+		    <a class="navbar-brand" href="#">
+		    	<span class="archistico">NQysit Logo Generator</span>
+		    </a>
+		</nav>		
+ 			
+		<div class="row">  
+	        <div class="col-lg-5">
+	        	<fieldset id="fieldIMGSize">
+				<legend>Tama&ntilde;o - IMG</legend>
+			 		<div class="form-group">
+			 			<label for="widthCanvas" class="col-sm-2 control-label">Width</label>
+					    <div class="col-sm-10">
+					    	<input class="form-control" type="number" min="10" max="5000" value="500" name="widthCanvas" id="widthCanvas" onchange="dimensionsCanvas()" />
+					    </div>
+					</div>
+					<div class="form-group">
+						<label for="heightCanvas" class="col-sm-2 control-label">Height</label>
+					    <div class="col-sm-10">
+					    	<input class="form-control" type="number" min="10" max="5000" value="460" name="heightCanvas" id="heightCanvas" onchange="dimensionsCanvas()" />
+					    </div>
+					</div>
+			 	</fieldset>
+	        </div>
+	    	<div class="col-lg-7">
+	        	<fieldset id="fieldLogoSize">
+					<legend>Tama&ntilde;o & Posici&oacute;n - Logo</legend>	
+			 		<div class="row"> 
+				        <div class="col-lg-8">
+				        	<div class="form-group">
+					 			<label for="logoScaleX" class="col-sm-3 control-label">scaleX</label>
+							    <div class="col-sm-9">
+							    	<input class="form-control" type="number" name="logoScaleX" id="logoScaleX" value="15" onchange="updateScale('x')" />
+							    </div>
+			 				</div>
+				 			<div class="form-group">
+					 			<label for="logoScaleY" class="col-sm-3 control-label">scaleY</label>
+							    <div class="col-sm-9">
+							    	<input class="form-control" type="number" name="logoScaleY" id="logoScaleY" value="300" onchange="updateScale('y')" />
+							    </div>
+				 			</div>
+				        </div> 
+				        <div class="col-lg-4">
+				        	<div class="checkbox">
+						        <label>
+						        	<input type="checkbox" checked="checked" name="checkLogoProporciones" id="checkLogoProporciones" onchange="updateScale('y')" /> Mantener proporciones (1:20)
+						        </label>
+							</div>
+				        </div>
+					</div>
+					<div class="form-group">
+			 			<label for="xLogo" class="col-sm-2 control-label">X</label>
+					    <div class="col-sm-10">
+					    	<input class="form-control" type="number" value="250" name="xLogo" id="xLogo" onchange="cargaDatos()" />
+					    </div>
+					</div>
+					<div class="form-group">
+						<label for="yLogo" class="col-sm-2 control-label">Y</label>
+					    <div class="col-sm-10">
+					    	<input class="form-control" type="number" value="320" name="yLogo" id="yLogo" onchange="cargaDatos()" />
+					    </div>
+					</div>
+				</fieldset>
+	        </div>
+		</div>
+ 		
+		<div class="row"> 
+	    	<div class="col-lg-7">
+	        	<fieldset id="fieldColores">
+					<legend>Colores Fondo</legend>			
+					<div class="checkbox">
+		    			<label>
+				 			<input type="checkbox" checked="checked" name="checkBG" id="checkBG" onchange="swapCheckBG()" /> Incluir Fondo
+		    			</label>
+		  			</div>
+					<canvas id="demoColores" class="form-control"><p>Su navegador no soporta HTML5</p></canvas>
+		 			<button type="button" class="btn btn-default" id="btnAddColor" onclick="agregaColor();">
+						<span class="glyphicon glyphicon-file"> </span> Agregar Color
+					</button>
+					
+					<br />
+					
+					<div class="form-group" id="colorBG1">
+			 			<label class="col-sm-2 control-label" id="lblColor1">Color #1</label>
+			 			<div class="col-sm-2">
+				 			<input class="form-control" type="color" name="colorFondo1" id="colorFondo1" value="#ffcc44" onchange="cargaDatos()" /> 	 				
+					    </div>
+					    <div class="col-sm-5">
+					    	<input class="form-control" type="range" min="0" max="100" step="1" value="0" name="rangeColor1" id="rangeColor1" onchange="cambiaRange('range', 'Color1')" />
+					    </div>
+					    <div class="col-sm-2">
+					    	<input class="form-control" type="number" min="0" max="100" value="0" name="numberRangeColor1" id="numberRangeColor1" onchange="cambiaRange('number', 'Color1')" />
+					    </div>
+					    <div class="col-sm-1">&nbsp;</div>
+					</div>
+					<div class="form-group" id="colorBG2">
+			 			<label class="col-sm-2 control-label" id="lblColor2">Color #2</label>
+			 			<div class="col-sm-2">
+				 			<input class="form-control" type="color" name="colorFondo2" id="colorFondo2" value="#ff7700" onchange="cargaDatos()" /> 	 				
+					    </div>
+					    <div class="col-sm-5">
+					    	<input class="form-control" type="range" min="0" max="100" step="1" value="100" name="rangeColor2" id="rangeColor2" onchange="cambiaRange('range', 'Color2')" />
+					    </div>
+					    <div class="col-sm-2">
+					    	<input class="form-control" type="number" min="0" max="100" value="100"name="numberRangeColor2" id="numberRangeColor2" onchange="cambiaRange('number', 'Color2')" />
+					    </div>
+					    <div class="col-sm-1">
+					    	<button type="button" class="btn btn-default" onclick="removeColor(2)">
+					    		<span class="glyphicon glyphicon-remove"> </span>
+					    	</button>
+					    </div>
+					</div>
+				</fieldset>
+	        </div> 
+	        <div class="col-lg-5">
+	        	<fieldset id="fieldConfColores">
+					<legend>Configuraci&oacute;n Colores</legend>
+				    <div class="form-group">
+				    	<div class="radio">
+			    			<label>
+								<input type="radio" name="gradientStyle" id="gradientStyle_linear" value="linear" checked="checked" onchange="cambiaGradientDiv('linear')" /> Linear
+			    			</label>
+		  				</div>
+		  				<div class="radio">
+			    			<label>
+								<input type="radio" name="gradientStyle" id="gradientStyle_radial" value="radial" onchange="cambiaGradientDiv('radial')" /> Radial
+			    			</label>
+		  				</div>
+				    </div>
+				    <br />
+					<div class="form-group" id="gradientDiv">
+			 			<label class="col-sm-3 control-label" id="lblAngulo">&Aacute;ngulo</label>
+					    <div class="col-sm-6">
+					    	<input class="form-control" type="range" min="0" max="360" step="1" value="0" name="rangeAngulo" id="rangeAngulo" onchange="cambiaRange('range', 'Angulo')" />
+					    </div>
+					    <div class="col-sm-3">
+					    	<input class="form-control" type="number" min="0" max="360" value="0"name="numberRangeAngulo" id="numberRangeAngulo" onchange="cambiaRange('number', 'Angulo')" />
+					    </div>
+					</div>
+				</fieldset>
+	        </div>
+		</div>
+
+<!--	
+	----
+	-----
+	----
+
+
+<div style="visibility: hidden">
+-->
+
+	 	<fieldset>	 		
+			<legend>BG circulo</legend> 		
+		 	<input type="checkbox" name="checkCirculo" id="checkCirculo" onchange="cargaDatos()" /> Incluir Circulo
+		 	<br />
+		 	Color fondo #1: <input type="color" name="colorCirculo1" id="colorCirculo1" value="#ffcc44" onchange="cargaDatos()" /> 
+		 	Radio #1 (max 100): <input type="number" name="radioCirculo1" id="radioCirculo1" min="1" max="100" value="50" onchange="cargaDatos()" />
+		 	<br />
+		 	Color fondo #2: <input type="color" name="colorCirculo2" id="colorCirculo2" value="#ff7700" onchange="cargaDatos()" /> 
+		 	Radio #2 (max 400): <input type="number" name="radioCirculo2" id="radioCirculo2" min="100" max="400" value="250" onchange="cargaDatos()" />
+	 	</fieldset>
+	 	
+	 	<fieldset>
+					<legend>Estilo</legend>
+					<input type="radio" name="logoStyle" id="logoStyle_liso" value="liso" checked="checked" onchange="cambiaFieldEstiloLogo()" /> Liso
+					<input type="radio" name="logoStyle" id="logoStyle_3d" value="3d"onchange="cambiaFieldEstiloLogo()" /> 3D
+					<input type="radio" name="logoStyle" id="logoStyle_neon" value="neon" onchange="cambiaFieldEstiloLogo()" /> Neon
+					<input type="radio" name="logoStyle" id="logoStyle_sandwich" value="sandwich" onchange="cambiaFieldEstiloLogo()" /> Sandwich
+					<input type="radio" name="logoStyle" id="logoStyle_profundo" value="profundo" onchange="cambiaFieldEstiloLogo()" /> Profundo
+					<input type="radio" name="logoStyle" id="logoStyle_custom" value="custom" onchange="cambiaFieldEstiloLogo()" /> Custom
+					<fieldset id="fieldEstiloLogo">
+						<label id="logolbl1">Color #1:</label> <input type="color" name="logoC1" id="logoC1" value="#000000" onchange="cargaDatos()" />
+						<label id="logolbl2">Size:</label> <input type="number" name="logoN1" id="logoN1" min="0" max="50" value="15" onchange="cargaDatos()" />
+						<label id="logolbl3">shadowOffsetX:</label> <input type="number" name="logoN2" id="logoN2" min="-50" max="50" value="10" onchange="cargaDatos()" />
+						<label id="logolbl4">shadowOffsetY:</label> <input type="number" name="logoN3" id="logoN3" min="-50" max="50" value="10" onchange="cargaDatos()" />
+						<label id="logolbl5">shadowBlur:</label> <input type="number" name="logoN4" id="logoN4" min="0" max="50" value="10" onchange="cargaDatos()" />
+						<br />
+						<label id="logolbl6">Color #2:</label> <input type="color" name="logoC2" id="logoC2" value="#000000" onchange="cargaDatos()" />
+						<label id="logolbl7">Size:</label> <input type="number" name="logoN5" id="logoN5" min="0" max="50" value="22.5" onchange="cargaDatos()" />
+						<label id="logolbl8">shadowOffsetX:</label> <input type="number" name="logoN6" id="logoN6" min="-50" max="50" value="10" onchange="cargaDatos()" />
+						<label id="logolbl9">shadowOffsetY:</label> <input type="number" name="logoN7" id="logoN7" min="-50" max="50" value="10" onchange="cargaDatos()" />
+						<label id="logolbl10">shadowBlur:</label> <input type="number" name="logoN8" id="logoN8" min="0" max="50" value="10" onchange="cargaDatos()" />
+					</fieldset>	
+				</fieldset>	
+		
+		<fieldset>
+	 		<legend>Textos</legend>
+		 		<input type="checkbox" name="checkBrand" id="checkBrand" onchange="cargaDatos()" />
+	 			<input type="text" value="@NQysit" id="txtBrand" name="txtBrand" onchange="cargaDatos()" />
+	 			<input type="checkbox"name="itaBrand" id="itaBrand" onchange="cargaDatos()" /> Italic
+	 			Font:
+	 			<select id="selectBrand" name="selectBrand" onchange="cargaDatos()">
+	 				<option value="archistico_bold">archistico_bold</option>
+	 				<option value="archistico_simple">archistico_simple</option>
+	 				<option value="orbitron_black">orbitron_black</option>
+	 				<option value="orbitron_bold">orbitron_bold</option>
+	 				<option value="orbitron_light">orbitron_light</option>
+	 				<option value="orbitron_medium" selected="selected">orbitron_medium</option>
+	 			</select>
+	 			Size: <input type="number" min="1" max="2000" value="70" name="sizeBrand" id="sizeBrand" onchange="cargaDatos()" />
+	 			<input type="color" value="#55acee" id="colorBrand" name="colorBrand" onchange="cargaDatos()" />
+	 			X: <input type="number" value="210" name="xBrand" id="xBrand" onchange="cargaDatos()" />
+	 			Y: <input type="number" value="480" name="yBrand" id="yBrand" onchange="cargaDatos()" />
+	 			<br />
+		 		<input type="checkbox" checked="checked" name="checkURL" id="checkURL" onchange="cargaDatos()" />
+	 			<input type="text" value="www.nqysit.com" id="txtURL" name="txtURL" onchange="cargaDatos()" />
+				<input type="checkbox" checked="checked" name="itaURL" id="itaURL" onchange="cargaDatos()" /> Italic
+	 			Font:
+	 			<select id="selectURL" name="selectURL" onchange="cargaDatos()">
+	 				<option value="archistico_bold">archistico_bold</option>
+	 				<option value="archistico_simple">archistico_simple</option>
+	 				<option value="orbitron_black">orbitron_black</option>
+	 				<option value="orbitron_bold">orbitron_bold</option>
+	 				<option value="orbitron_light">orbitron_light</option>
+	 				<option value="orbitron_medium" selected="selected">orbitron_medium</option>
+	 			</select>
+	 			Size: <input type="number" min="1" max="2000" value="50" name="sizeURL" id="sizeURL" onchange="cargaDatos()" />
+	 			<input type="color" value="#000" id="colorURL" name="colorURL" onchange="cargaDatos()" />
+	 			X: <input type="number" value="210" name="xURL" id="xURL" onchange="cargaDatos()" />
+	 			Y: <input type="number" value="440" name="yURL" id="yURL" onchange="cargaDatos()" />
+	 	</fieldset>
+
+
+<!--
+	
+</div>
+	-----
+	----
+	--
+-->
+		
+		<br />
+		<canvas id="areaCanvas" style="border:1px solid #000000;"><p>Su navegador no soporta HTML5</p></canvas>
+	 	<br />
+		<a href="#" class="btn btn-default" onclick="exportaIMG();"><span class="glyphicon glyphicon-share-alt"> </span> Exportar</a>
+		
+		<br />
+		<br />
+		<br />
+		
+		<div id="footer">
+      		<div class="navbar navbar-default">
+      			<center><span class="orbitron"><i>@NQysit</i></span></center>
+      		</div>
+    	</div>
+		 		
+	</div> <!-- fin container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    
+    <!-- NQ JS -->
+	<script src="demo.js" type="text/javascript"></script>
+	<script src="logo.js" type="text/javascript"></script>
+	<script src="functions.js" type="text/javascript"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript"></script>
+    
+  </body>
+</html>
