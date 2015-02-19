@@ -377,6 +377,22 @@ function exportaIMG()
 	window.open(c.toDataURL('image/png'));	
 }
 
+/*
+ * exportaPDF()
+ * crea un PDF co nome especificado na aplicación
+ */
+function exportaPDF()
+{
+	var c = document.getElementById("areaCanvas");
+	var exportar = document.getElementById("txtExportar").value;
+	
+	var imgData = c.toDataURL('image/png', 1.0);	
+	var pdf = new jsPDF('l','px','a3');
+
+	pdf.addImage(imgData, 'PNG', 15, 15);
+	pdf.save('' + exportar +'.pdf');
+}
+
 
 /*
  * 

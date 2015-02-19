@@ -255,7 +255,10 @@
 		<br />
 		<canvas id="areaCanvas" style="border:1px solid #000000;"><p>Su navegador no soporta HTML5</p></canvas>
 	 	<br />
-		<a href="#" class="btn btn-default" onclick="exportaIMG();"><span class="glyphicon glyphicon-share-alt"> </span> Exportar</a>
+	 	<input type="text" name="txtExportar" id="txtExportar" value="imaxe" />
+
+		<a href="#" class="btn btn-default" onclick="exportaIMG();"><span class="glyphicon glyphicon-share-alt"> </span> Exportar a PNG</a>		
+		<a href="#" class="btn btn-default" onclick="exportaPDF();"><span class="glyphicon glyphicon-share-alt"> </span> Exportar a PDF</a>
 		
 		<br />
 		<br />
@@ -272,6 +275,9 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     
+    <!-- pdf -->    
+	<script src="jspdf.min.js" type="text/javascript"></script>
+
     <!-- NQ JS -->
 	<script src="demo.js" type="text/javascript"></script>
 	<script src="logo.js" type="text/javascript"></script>
