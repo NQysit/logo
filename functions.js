@@ -6,6 +6,11 @@
  * 
  */
 
+/* global variables */
+window.ratio_scalexy = 20;
+window.ratio_sizeshadow = 1.5;
+window.ratio_scalexsize = 1;
+
 /*
  * dimensionsCanvas()
  * da tamaño á área de canvas
@@ -28,7 +33,6 @@ function dimensionsCanvas()
  */
 function cargaDatos()
 {
-	
 	
 	//variables scale
 	var scaleX = document.getElementById("logoScaleX").value;
@@ -368,13 +372,23 @@ function cambiaFieldEstiloLogo()
 }
 
 /*
- * exportaIMG()
+ * exportaPNG()
  * abre unha nova pestaña cunha imaxen .png co estado actual do canvas
  */
-function exportaIMG()
+function exportaPNG()
 {
 	var c=document.getElementById("areaCanvas");
 	window.open(c.toDataURL('image/png'));	
+}
+
+/*
+ * exportaJPG()
+ * abre unha nova pestaña cunha imaxen .png co estado actual do canvas
+ */
+function exportaJPG()
+{
+	var c=document.getElementById("areaCanvas");
+	window.open(c.toDataURL('image/jpeg', 1.0));	
 }
 
 /*
@@ -399,13 +413,17 @@ function exportaPDF()
  */
 function updateScale(axis)
 {
-	if(document.getElementById("checkLogoProporciones").checked)
-	{
+	if(document.getElementById("checkLogoProporciones").checked) {
 		if(axis=="x")
-			document.getElementById("logoScaleY").value = document.getElementById("logoScaleX").value * 20;
+			document.getElementById("logoScaleY").value = document.getElementById("logoScaleX").value * window.ratio_scalexy;
 		else
-			document.getElementById("logoScaleX").value = document.getElementById("logoScaleY").value / 20;
-	}	
+			document.getElementById("logoScaleX").value = document.getElementById("logoScaleY").value / window.ratio_scalexy;
+	}
+	
+	if(document.getElementById("logoStyle_liso").checked) {
+		document.getElementById("logoN1").value = document.getElementById("logoScaleX").value * window.ratio_scalexsize;
+		document.getElementById("logoN5").value = document.getElementById("logoN1").value * window.ratio_sizeshadow;
+	}
 	
 	cargaDatos();
 }

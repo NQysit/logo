@@ -287,7 +287,7 @@ function Logo()
 
       	ctx.fillStyle = color;
     	//ctx.fillText(text, parseInt(x), parseInt(y));
-    	ctx.fillText(text, this.centerX, parseInt(y));
+    	ctx.fillText(text, parseInt(x), parseInt(y));
     	
 	 }
   	
